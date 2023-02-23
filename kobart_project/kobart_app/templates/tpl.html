@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>KobartApp</title>
+
+    <style>
+        .form {
+            text-align:center;
+        }
+        .form2 {
+            text-align:center;
+            list-style-position: inside;
+        }
+    </style>
+
+
+</head>
+<body>
+    
+    <div class="form">
+    <h1>Kobart 요약</h1>
+    <p>반갑습니다 요약을 해주는 사이트입니다.</p>
+
+
+    <form action="http://localhost:8000/summary/" method="POST" id="summary">
+        {% csrf_token %}
+            <label for="summary_id">(*)</label>
+            <input type="text" id="summary_id" name="content" size="100" placeholder="요약 문장을 입력하십시오." autocomplete="off">
+            <button type="submit" form="summary">입력</button>
+        </form>
+
+    </div>
+
+
+    <div class="form2" stlye="padding-top: 50px">
+        <ul style="line-height: 2em">
+            {% for article in lists%}
+                <li>
+                    <b>{{article.id}}</b>
+                    {{article.before_text}}
+
+                    <br>
+                    {{article.after_text}}
+                    <br>
+                    <small style="color:deeppink;font-weight:bold">
+                        ({{article.date | date:'Y-M-D'}})
+                    </small>
+                    &nbsp;
+                    [<a href="./edit/{{article.id}}" style="font-weight:bold">재요약</a>]
+                    [<a href="./delete/{{article.id}}" style="font-weight:bold">삭제</a>]
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
